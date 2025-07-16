@@ -1,75 +1,342 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Congresso de Fisioterapia</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #2c0040;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congresso de Fisioterapia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    .popup-box {
-      background-color: #2c0040;
-      color: #fff;
-      max-width: 480px;
-      padding: 30px 25px;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 0 20px #ff90f2;
-    }
+        body {
+            --cor-bg-principal: #13051f;
+            --cor-bg-secundaria: #290042;
+            --cor-destaque: #f8d0e3;
+            --cor-destaque-secundaria: #8a63d4;
+            --cor-texto: #ffffff;
+            --cor-texto-secundaria: rgba(255, 255, 255, 0.8);
+            --cor-texto-terciaria: rgba(255, 255, 255, 0.5);
+            --borda-raio: 18px;
+            --borda-raio-btn: 8px;
+            
+            margin: 0;
+            background: linear-gradient(135deg, #13051f 0%, #290042 100%);
+            color: var(--cor-texto);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .popup-box h2 {
-      color: #ffc7f9;
-      font-size: 1.4em;
-      margin-bottom: 15px;
-    }
+        /* Efeito de fundo animado */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(138, 99, 212, 0.1) 0%, rgba(138, 99, 212, 0) 70%);
+            z-index: -1;
+            animation: rotate 20s linear infinite;
+        }
 
-    .popup-box p {
-      font-size: 1em;
-      margin-bottom: 20px;
-    }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-    .popup-box a {
-      text-decoration: none;
-      padding: 10px 15px;
-      margin: 5px;
-      display: inline-block;
-      border-radius: 8px;
-      font-weight: bold;
-    }
+        .popup-box {
+            background-color: rgba(19, 5, 31, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: var(--borda-raio);
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(138, 99, 212, 0.1);
+            max-width: 520px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
 
-    .btn-info {
-      background: #a265e3;
-      color: white;
-    }
+        .popup-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, 
+                rgba(138, 99, 212, 0), 
+                rgba(248, 208, 227, 0.3), 
+                rgba(138, 99, 212, 0)
+            );
+            opacity: 0.6;
+        }
 
-    .btn-info:hover {
-      background: #864cd3;
-    }
+        /* Decoração de fundo do popup */
+        .popup-decoration {
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(138, 99, 212, 0.1) 0%, rgba(138, 99, 212, 0) 70%);
+            z-index: -1;
+            filter: blur(30px);
+        }
 
-    .btn-desconto {
-      background: #ffc93f;
-      color: #2c0040;
-    }
+        .popup-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(41, 0, 66, 0.5);
+            border: 1px solid rgba(138, 99, 212, 0.2);
+            border-radius: 50px;
+            padding: 8px 16px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
 
-    .btn-desconto:hover {
-      background: #ffb300;
-    }
-  </style>
+        .popup-tag:hover {
+            background-color: rgba(41, 0, 66, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .popup-tag-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, var(--cor-destaque-secundaria), var(--cor-destaque));
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 8px rgba(248, 208, 227, 0.5);
+        }
+
+        .popup-tag-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--cor-texto);
+            letter-spacing: 0.5px;
+        }
+
+        .popup-box h2 {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--cor-texto);
+            position: relative;
+            z-index: 1;
+        }
+
+        .popup-highlight {
+            color: var(--cor-destaque);
+        }
+
+        .popup-box p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--cor-texto-secundaria);
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .popup-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                rgba(138, 99, 212, 0.3), 
+                rgba(248, 208, 227, 0.2), 
+                rgba(138, 99, 212, 0.3)
+            );
+            margin: 30px 0;
+            opacity: 0.5;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .popup-box a {
+            text-decoration: none;
+            padding: 18px 25px;
+            border-radius: var(--borda-raio-btn);
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1.2;
+            text-transform: lowercase;
+            cursor: pointer;
+            letter-spacing: 0.2px;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+            flex: 1;
+        }
+
+        .btn-info {
+            background: linear-gradient(90deg, #8a63d4 0%, #9a7dcb 50%, #8a63d4 100%);
+            background-size: 200% 100%;
+            color: white;
+            border: 1px solid rgba(138, 99, 212, 0.3);
+        }
+
+        .btn-info::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            opacity: 0;
+            transform: rotate(30deg);
+            background: linear-gradient(
+                to right, 
+                rgba(255, 255, 255, 0.13) 0%,
+                rgba(255, 255, 255, 0.13) 77%,
+                rgba(255, 255, 255, 0.5) 92%,
+                rgba(255, 255, 255, 0.0) 100%
+            );
+            z-index: 2;
+        }
+
+        .btn-info:hover::after {
+            opacity: 1;
+            left: 130%;
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .btn-info:hover {
+            background-position: 100% 0;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(138, 99, 212, 0.4);
+        }
+
+        .btn-desconto {
+            background: linear-gradient(90deg, #ffc93f 0%, #ffb300 50%, #ffc93f 100%);
+            background-size: 200% 100%;
+            color: #2c0040;
+            border: 1px solid rgba(255, 201, 63, 0.3);
+        }
+
+        .btn-desconto::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            opacity: 0;
+            transform: rotate(30deg);
+            background: linear-gradient(
+                to right, 
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(255, 255, 255, 0.2) 77%,
+                rgba(255, 255, 255, 0.6) 92%,
+                rgba(255, 255, 255, 0.0) 100%
+            );
+            z-index: 2;
+        }
+
+        .btn-desconto:hover::after {
+            opacity: 1;
+            left: 130%;
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .btn-desconto:hover {
+            background-position: 100% 0;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(255, 201, 63, 0.4);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .popup-box {
+                padding: 30px 25px;
+                max-width: 450px;
+            }
+            
+            .popup-box h2 {
+                font-size: 28px;
+            }
+            
+            .popup-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .popup-box a {
+                min-width: auto;
+                flex: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .popup-box {
+                padding: 25px 20px;
+            }
+            
+            .popup-box h2 {
+                font-size: 24px;
+            }
+            
+            .popup-box a {
+                padding: 16px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="popup-box">
-    <h2>🎓 Garanta sua vaga no 3º Congresso de Fisioterapia Neonatal e Pediátrica!</h2>
-    <p>Participe do maior evento da área e aproveite condições especiais.</p>
-    <a class="btn-info" href="https://congressoneoped.com.br/" target="_blank">Mais informações</a>
-    <a class="btn-desconto" href="https://www.compreoseu.com.br/site/evento/245" target="_blank">Adquirir desconto de aluno</a>
-  </div>
+    <div class="popup-box">
+        <div class="popup-decoration"></div>
+        
+        <div class="popup-tag">
+            <div class="popup-tag-dot"></div>
+            <span class="popup-tag-text">EVENTO IMPERDÍVEL</span>
+        </div>
+        
+        <h2>🎓 Garanta sua vaga no <span class="popup-highlight">3º Congresso</span> de Fisioterapia Neonatal e Pediátrica!</h2>
+        
+        <p>Participe do maior evento da área e aproveite condições especiais para expandir seus conhecimentos com os maiores especialistas.</p>
+        
+        <div class="popup-divider"></div>
+        
+        <div class="popup-buttons">
+            <a class="btn-info" href="https://congressoneoped.com.br/" target="_blank">mais informações</a>
+            <a class="btn-desconto" href="https://bit.ly/4kmuw3d" target="_blank">desconto de aluno</a>
+        </div>
+    </div>
 </body>
 </html>

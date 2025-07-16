@@ -13,28 +13,28 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        body {
-            --cor-bg-principal: #13051f;
-            --cor-bg-secundaria: #290042;
-            --cor-destaque: #f8d0e3;
-            --cor-destaque-secundaria: #8a63d4;
-            --cor-texto: #ffffff;
-            --cor-texto-secundaria: rgba(255, 255, 255, 0.8);
-            --cor-texto-terciaria: rgba(255, 255, 255, 0.5);
-            --borda-raio: 18px;
-            --borda-raio-btn: 8px;
-            
-            margin: 0;
-            background: linear-gradient(135deg, #13051f 0%, #290042 100%);
-            color: var(--cor-texto);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-        }
+       body {
+    --cor-bg-principal: #13051f;
+    --cor-bg-secundaria: #290042;
+    --cor-destaque: #f8d0e3;
+    --cor-destaque-secundaria: #8a63d4;
+    --cor-texto: #ffffff;
+    --cor-texto-secundaria: rgba(255, 255, 255, 0.8);
+    --cor-texto-terciaria: rgba(255, 255, 255, 0.5);
+    --borda-raio: 12px;
+    --borda-raio-btn: 6px;
+
+    margin: 0;
+    background: linear-gradient(135deg, #13051f 0%, #290042 100%);
+    color: var(--cor-texto);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
 
         /* Efeito de fundo animado */
         body::before {
@@ -70,20 +70,21 @@
             z-index: 1;
         }
 
-        .popup-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, 
-                rgba(138, 99, 212, 0), 
-                rgba(248, 208, 227, 0.3), 
-                rgba(138, 99, 212, 0)
-            );
-            opacity: 0.6;
-        }
+        .popup-box {
+    background-color: rgba(19, 5, 31, 0.95);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: var(--borda-raio);
+    padding: 30px 50px 30px 50px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(138, 99, 212, 0.1);
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
 
         /* Decoração de fundo do popup */
         .popup-decoration {
